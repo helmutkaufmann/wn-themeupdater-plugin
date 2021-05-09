@@ -24,12 +24,12 @@ composer require mercator/wn-themeupdater-plugin
 
 ## Artisan commands
 ### php artisan theme:copy master child
-The command **php artisan theme:copy *master* *child* *** produces a copy of the theme *master* and calls it *child*. 
+The command **php artisan theme:copy master child** produces a copy of the theme *master* and calls it *child*. 
 Upon completion, it executes the script *themekeeping/install.php* located in the *master* theme, which allows 
 modifications to the created *child* theme. See examples for a set of pre-defined commands.
 
 ### php artisan theme:update master child
-The command **php artisan theme:update *master* *child* *** updates defined parts of the *child* theme with the 
+The command **php artisan theme:update master child** updates defined parts of the *child* theme with the 
 *master* theme. It does so by calling the script *themekeeping/install.php* located in the *child* theme. 
 See examples for a set of pre-defined commands.
 
