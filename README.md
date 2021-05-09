@@ -95,7 +95,7 @@ $updater->replace("theme.yaml");
 ```
 To update, call the following from the console:
 ``` 
-php artisan theme:copy mater child
+php artisan theme:copy master child
 ```
 
 If you want to update layouts from the master, but keep the existing *default.htm*, back it up and restore afterwards:
