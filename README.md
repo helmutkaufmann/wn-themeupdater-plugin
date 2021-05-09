@@ -59,7 +59,7 @@ Copies a file or directory from the master theme (*from*) to the child theme (*t
 Copies a file or directory locally in the child theme. Existing files will be overwritten. For example, if the master
 theme holds a config file in assets, that the user needs to adapt, you can copy it as follows:
 ``` 
-childcopy("assets/config.yaml.temaplate", ""assets/config.yaml")
+childcopy("assets/config.yaml.temaplate", "assets/config.yaml")
 ```
 
 And of course, you can use any other PHP command in *install.php* and *update.php*. The following two functions might
