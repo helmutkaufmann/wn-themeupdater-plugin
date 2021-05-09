@@ -1,0 +1,19 @@
+{
+    "name": "mercator/wn-themeupdater-plugin",
+    "type": "winter-plugin",
+    "description": "Winter CMS Theme Updater Plugin",
+    "homepage": "https://github.com/helmutkaufmann/wn-twigext-plugin",
+    "keywords": ["winter", "wintercms", "laravel", "theme", "updater", "php"],
+    "license": "(C) Helmut Kaufmann, 2021",
+    "authors": [
+        {
+            "name": "Helmut Kaufmann",
+            "role": "Author"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.0",
+        "composer/installers": "~1.0"
+    },
+}
