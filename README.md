@@ -123,11 +123,11 @@ To get things running
 - Create *themekeeping/update.php*
 - Upload your master theme to GitHub (and Composer if you feel like it)
 - Install the master theme on all the web sites you want to use it (through GitHub or Composer), let us call it *mymaster* 
-as an example.
+as an example
 - Create the child theme you want to use in your website by running ``artisan theme:copy mymaster mychid``
 (this will create a theme called *mychild* from the master theme *mymaster*)
 - Whenever you have updated the master theme, download it on all sites you are running
-- Run ``artisan theme:update mymaster mychild``on each machine and you are done.
+- Run ``artisan theme:update mymaster mychild``on each machine and you are done
 
 
 
