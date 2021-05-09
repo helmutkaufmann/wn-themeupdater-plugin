@@ -27,7 +27,7 @@ class Instructions {
 		if (is_file($source)) {
 			@mkdir(dirname($destination), 0755, true);
 			copy ($source, $destination);
-			echo $destination . "/" . basename($source);
+			echo $destination ;
 			return;
 		}
 
@@ -67,13 +67,9 @@ class Instructions {
 	// Backup files or directores of the theme to a safe place
 	public function backup($source)
     {
-    	$theme_path = $this->child_theme . "/";
+    	$theme_path = $this->child_theme;
 	 	$storage_path = storage_path("THEMES_BACKUP/");
-	 	if (is_file($theme_path . $source))
-	 		$destination = dirname($storage_path . $source);
-	 	else
-	 		$destination = $storage_path . ($source);
-    	Instructions::recursive_copy ($theme_path . $source, $destination);
+    	$this->recursive_copy ($theme_path . $source, $storage_path . $source);
     }
 
     // Restore files or directores of the theme from a safe place
@@ -82,7 +78,7 @@ class Instructions {
     	$theme_path = $this->child_theme;
 	 	$storage_path = storage_path("THEMES_BACKUP/");
 	 	if (is_file($storage_path . $source))
-	 		$destination = $theme_path . dirname($source);
+	 		$destination = $theme_path . $source;
 	 	elseif (is_dir($storage_path . $source))
 	 		$destination = $theme_path . ($source);
 	 	else {
