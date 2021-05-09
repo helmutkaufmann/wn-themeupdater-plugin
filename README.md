@@ -4,6 +4,13 @@ This is a [WinterCMS](https://wintercms.com) plugin that supports the semi-autom
 For the sake of this plugin, the term *master theme* relates to a theme template that that will be used in one or more
 websites. This template theme is located the themes directory of [WinterCMS](https://wintercms.com).
 
+Note that themes installed with composer are not updated. In case you want your master theme to be re-installed 
+in the latest version, use
+```
+composer require <<package name>>
+```
+instead.
+
 The term *child theme* relates to a theme that is used by [WinterCMS](https://wintercms.com) in displaying website 
 content. The theme is again located in the themes directory of [WinterCMS](https://wintercms.com).
 
@@ -108,6 +115,19 @@ could look as follows:
 $res = yourFunction($updater->child_path()); // call yourFunction and pass child path
 
 ```
+
+## One more time
+To get things running
+- Create a master theme (or install it with composer)
+- Create *themekeeping/install.php*
+- Create *themekeeping/update.php*
+- Upload your master theme to GitHub (and Composer if you feel like it)
+- Install the master theme on all the web sites you want to use it (through GitHub or Composer), let us call it *mymaster* 
+as an example.
+- Create the child theme you want to use in your website by running ``artisan theme:copy mymaster mychid``
+(this will create a theme called *mychild* from the master theme *mymaster*)
+- Whenever you have updated the master theme, download it on all sites you are running
+- Run ``artisan theme:update mymaster mychild``on each machine and you are done.
 
 
 
