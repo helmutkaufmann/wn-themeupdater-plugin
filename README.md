@@ -103,6 +103,7 @@ $updater->replace("theme.yaml");
 
 If you need to call a specific function *yourFunction* to configure a theme after it has been copied, your *install.php*
 could look as follows:
+``` 
 <?php
 $res = yourFunction($updater->child_path()); // call yourFunction and pass child path
 
