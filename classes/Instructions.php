@@ -33,6 +33,11 @@ class Instructions {
 			return;
 		}
 
+		if (!is_dir($source)) {
+			echo ("Error: <<$source>> does not exist and therefore cannot be copied).\n");
+			return;
+		}
+			
 		$dir = opendir($source); 
 		if (!is_dir($destination))
     		mkdir($destination); 
@@ -87,7 +92,7 @@ class Instructions {
 	 	elseif (is_dir($storage_path . $source))
 	 		$destination = $theme_path . ($source);
 	 	else {
-	 		echo ("Warning: Cannot restore <<$source>> as it has not been backed up.");
+	 		echo ("Warning: Cannot restore <<$source>> as it has not been backed up.\n");
 	 		return;
 	 	}
 
@@ -105,7 +110,7 @@ class Instructions {
 	 	elseif (is_dir($target))
 	 		$this->recursive_remove ($target);
 	 	else
-	 		echo ("Warning: Cannot remove <<$target>> as it does not exist.");
+	 		echo ("Warning: Cannot remove <<$target>> as it does not exist.\n");
     }
 
     // Copy files or directories from the master theme to the theme
