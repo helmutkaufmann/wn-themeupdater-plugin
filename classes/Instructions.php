@@ -1,9 +1,13 @@
 <?php namespace Mercator\ThemeUpdater\Classes;
 
+use Illuminate\Filesystem;
+
 class Instructions {
 
 	protected $master_theme;
     protected $child_theme;
+    
+    protected $master_file;
 
     public function __construct($source, $target) {
     	$this->master_theme=$source . "/";
@@ -25,37 +29,38 @@ class Instructions {
 	protected function recursive_copy($source, $destination) {
 
 		if (is_file($source)) {
-			@mkdir(dirname($destination), 0755, true);
+			if (!is_dir(dirname($destination)))
+				mkdir(dirname($destination), 0755, true);
 			copy ($source, $destination);
-			echo $destination ;
 			return;
 		}
 
-		$dir = opendir($source);
-		@mkdir($destination, 0755, true);
-		while(( $file = readdir($dir)) ) {
-			if (( $file != '.' ) && ( $file != '..' )) {
-				if ( is_dir($source . '/' . $file) ) {
-					$this->recursive_copy($source .'/'. $file, $destination .'/'. $file);
-				}
-				else {
-					@mkdir($destination, 0755, true);
-					@copy($source .'/'. $file, $destination .'/'. $file);
-				}
-			}
-		}
-		closedir($dir);
-
+		$dir = opendir($source); 
+		if (!is_dir($destination))
+    		mkdir($destination); 
+    	
+    	while(false !== ( $file = readdir($dir)) ) { 
+        	if (( $file != '.' ) && ( $file != '..' )) { 
+            	if ( is_dir($source . '/' . $file) ) { 
+             	   $this->recursive_copy($source . '/' . $file,$destination . '/' . $file); 
+            	} 
+            	else { 
+                	copy($source . '/' . $file,$destination . '/' . $file); 
+            	} 
+        	} 
+    	} 
+    	closedir($dir); 
 	}
 
-	protected function rrmdir($dir)
-   {
+	protected function recursive_remove($dir)
+   	{
+   
 		if (is_dir($dir)) {
 		 $objects = scandir($dir);
 		 foreach ($objects as $object) {
 		   if ($object != "." && $object != "..") {
 			 if (is_dir("$dir/$object") && !is_link("$dir/$object"))
-			   $this->rrmdir("$dir/$object");
+			   $this->recursive_remove("$dir/$object");
 			 else
 			   unlink("$dir/$object");
 		   }
@@ -69,6 +74,8 @@ class Instructions {
     {
     	$theme_path = $this->child_theme;
 	 	$storage_path = storage_path("THEMES_BACKUP/");
+	 	
+	 	Storage::disk($disk) -> put($file, $content);
     	$this->recursive_copy ($theme_path . $source, $storage_path . $source);
     }
 
@@ -82,14 +89,14 @@ class Instructions {
 	 	elseif (is_dir($storage_path . $source))
 	 		$destination = $theme_path . ($source);
 	 	else {
-	 		echo ("Warning: Cannot restore $source as backup does not exist");
+	 		echo ("Warning: Cannot restore <<$source>> as it has not been backed up.");
 	 		return;
 	 	}
 
     	$this->recursive_copy ($storage_path . $source, $destination);
     }
-
-    // Remove theme files or directories
+    
+     // Remove theme files or directories
     public function remove($source)
     {
 
@@ -98,9 +105,9 @@ class Instructions {
 	 	if (is_file($target))
 	 		unlink ($target);
 	 	elseif (is_dir($target))
-	 		$this->rrmdir ($target);
+	 		$this->recursive_remove ($target);
 	 	else
-	 		echo ("Cannot remove as inexistent: <<$target>>");
+	 		echo ("Warning: Cannot remove <<$target>> as it does not exist.");
     }
 
     // Copy files or directories from the master theme to the theme
@@ -125,6 +132,7 @@ class Instructions {
     // Test if a file or directory exists in the master theme
     public function file_exists_master($source)
     {
+    	
     	return file_exists($this->master_theme . $source);
 
     }
@@ -133,8 +141,8 @@ class Instructions {
     // This is identical to copy except that the any pre-existing files/directories are first deleted
     public function replace($source)
     {
-    	@$this->remove($source);
-	 	@$this->mastercopy($source, $source);
+    	$this->remove($source);
+	 	$this->mastercopy($source, $source);
 
     }
 
