@@ -111,15 +111,15 @@ class Instructions {
     }
 
     // Copy files or directories from the master theme to the theme
-    public function mastercopy($source, $child)
+    public function mastercopy($source, $destination)
     {
-    	$this->recursive_copy ($this->master_theme . $source, $this->child_theme . $child);
+    	$this->recursive_copy ($this->master_theme . $source, $this->child_theme . $destination);
     }
 
-     // Copy files or directories flocally
-    public function childcopy($source, $child)
+     // Copy files or directories locally
+    public function childcopy($source, $destination)
     {
-    	$this->recursive_copy ($this->child_theme . $source, $this->child_theme . $child);
+    	$this->recursive_copy ($this->child_theme . $source, $this->child_theme . $destination);
     }
 
     // Test if a file or directory exists in the theme
