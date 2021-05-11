@@ -17,7 +17,7 @@ class Copy extends Command
     /**
      * @var string The console command description.
      */
-    protected $description = 'Copy a theme.';
+    protected $description = 'Copy a theme and execute installation instructions.';
 
 	
 	
@@ -36,12 +36,12 @@ class Copy extends Command
     	$updater = new Instructions($source_theme, $target_theme);
     	
     	if (!file_exists($source_theme)) {	
-    		$this->output->writeln("Error: Source theme does not exist - cannot create a theme out of thin air.");
+    		$this->output->writeln("Error: Master theme does not exist. Cannot update a theme out of thin air.");
     		return;
     	}
     	
     	if (file_exists($target_theme)) {	
-    		$this->output->writeln("Error: Target theme already exist - remove it first to continue.");
+    		$this->output->writeln("Error: Target theme already exist. Remove it first or rename it.");
     		return;
     	}
     	
@@ -51,14 +51,14 @@ class Copy extends Command
         $script_path = $target_theme . "/themekeeping/install.php";
     
     	if (file_exists($script_path)) {
-        	$this->output->writeln("Theme installation instructions found... executing $script_path");
+        	$this->output->writeln("Info: Theme installation instructions found and executing.");
         	require $script_path;
         	
-        	$this->output->writeln("Theme installation instructions excuted - all done.");
+        	$this->output->writeln("Info: Theme installation instructions completed.");
         }
         	
         else
-        	$this->output->writeln('No theme installation instructions - all done.');
+        	$this->output->writeln('Info: No theme installation instructions found.');
         	
         return;
     }

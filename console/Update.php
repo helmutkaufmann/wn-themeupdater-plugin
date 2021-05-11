@@ -15,7 +15,7 @@ class Update extends Command
     /**
      * @var string The console command description.
      */
-    protected $description = 'Perform housekeeping post theme update.';
+    protected $description = 'Update a theme based on master theme update instructions.';
 
     /**
      * Execute the console command.
@@ -31,25 +31,25 @@ class Update extends Command
     	$updater = new Instructions($source_theme, $target_theme);
     	
     	if (!file_exists($source_theme)) {	
-    		$this->output->writeln("Error: Source theme does not exist - cannot update a theme out of thin air. ");
+    		$this->output->writeln("Error: Master theme does not exist. Cannot update a theme out of thin air.");
     		return;
     	}
     	
     	if (!file_exists($target_theme)) {	
-    		$this->output->writeln("Error: Target theme does not exist - there is nothing to update.");
+    		$this->output->writeln("Error: Target theme does not exist. There is nothing to update.");
     		return;
     	}
     	
         $script_path = $target_theme . "/themekeeping/update.php";
     
     	if (file_exists($script_path)) {
-        	$this->output->writeln("Theme updating instructions found... executing $script_path");
+        	$this->output->writeln("Info: Theme updating instructions found. Executing.");
         	require $script_path;
-        	$this->output->writeln("Theme updating instructions excuted - all done.");
+        	$this->output->writeln("Info: Theme updating instructions completed.");
         }
         	
         else
-        	$this->output->writeln('No theme installation instructions - all done.');
+        	$this->output->writeln('Info: No theme updating instructions found.');
         	
         return;
         

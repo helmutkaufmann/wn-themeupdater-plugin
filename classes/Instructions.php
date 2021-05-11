@@ -6,8 +6,6 @@ class Instructions {
 
 	protected $master_theme;
     protected $child_theme;
-    
-    protected $master_file;
 
     public function __construct($source, $target) {
     	$this->master_theme=$source . "/";
