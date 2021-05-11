@@ -1,6 +1,7 @@
 <?php namespace Mercator\ThemeUpdater;
 
 use Backend;
+use App;
 use System\Classes\PluginBase;
 
 
@@ -32,8 +33,9 @@ class Plugin extends PluginBase
     public function register()
     {
 
-    	$this->registerConsoleCommand('theme:copy', 'Mercator\ThemeUpdater\Console\Copy');
-    	$this->registerConsoleCommand('theme:update', 'Mercator\ThemeUpdater\Console\Update');
+        if (App::runningInConsole()) {
+            App::register(\Mercator\ThemeUpdater\Classes\ThemeUpdaterServiceProvider::class);
+        }
 
     }
 
